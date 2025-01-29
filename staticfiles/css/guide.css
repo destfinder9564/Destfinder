@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+header {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://images.unsplash.com/photo-1623677375828-30c246f6a338?auto=format&fit=crop&q=80&w=2000') center/cover;
+    color: white;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.destination-selector {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #1d4ed8;
+}
+
+.hidden {
+    display: none;
+}
+
+.guides-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.destination-image {
+    width: 100%;
+    height: 300px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.guides-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.guide-card {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.guide-card h3 {
+    color: #1e40af;
+    margin-bottom: 1rem;
+}
+
+.guide-info {
+    margin-bottom: 0.5rem;
+}
+
+.guide-languages {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.language-tag {
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+}
+
+.rating {
+    color: #eab308;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: #1e293b;
+    color: white;
+    margin-top: 4rem;
+}

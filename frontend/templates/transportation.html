@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportation</title>
+    <link rel="stylesheet" href="{% static 'css/trans1.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <!-- home section starts here  -->
+    <div class="first">
+        <section class="home">
+            <div class="home-box">
+                <nav>
+                    <div class="logo bars">
+                        <div class="bar">
+                            <i class="fa fa-bars"></i>
+                        </div>
+                        <a href="{% url 'home' %}">DestFinder</a>
+                    </div>
+                    <div class="menu">
+                        <div class="close">
+                            <i class="fa fa-close"></i>
+                        </div>
+                        <ul>
+                            <li><a href="{% url 'home' %}">Home</a></li>
+                            <li><a href="{% url 'about' %}">About Us</a></li>
+                            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'destination' %}">Destination</a></li>
+                                <li><a href="{% url 'budget_calculator' %}">Budget Calculator</a></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                                <li><a href="{% url 'profile' %}">Profile</a></li>
+                            {% else %}
+                                <li><a href="{% url 'register' %}">Register</a></li>
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </section>
+    </div>
+    <div class="container">
+        <h1 style="font-family: 'Times New Roman', Times, serif;">Transportation Finder</h1>
+        <div class="form-container">
+            <div class="form-group">
+                <label for="source">Select Source:</label>
+                <select id="source" required>
+                    <option value="">Select Source Location</option>
+                    <option value="Visakhapatnam">Visakhapatnam</option>
+                    <option value="Vijayawada">Vijayawada</option>
+                    <option value="Guntur">Guntur</option>
+                    <option value="Tirupati">Chittor</option>
+                    <option value="Nellore">Nellore</option>
+                    <option value="Kurnool">Kurnool</option>
+                    <option value="Kakinada">Kakinada</option>
+                    <option value="Rajahmundry">Rajahmundry</option>
+                    <option value="Anantapur">Anantapur</option>
+                    <option value="Kadapa">Kadapa</option>
+                    <option value="VZM">Vijayanagaram</option>
+                    <option value="CHE">Srikakulam</option>
+                    <option value="Ongole">Ongole</option>
+                    <option value="Tirupaty">Tirupathi</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destination">Select Destination:</label>
+                <select id="destination" required>
+                <option value="">--Select Destination--</option>
+                <option value="Visakhapatnam">Visakhapatnam</option>
+                <option value="Vijayawada">Vijayawada</option>
+                <option value="Tirupati">Tirupati</option>
+                <option value="Guntur">Guntur</option>
+                <option value="Nellore">Nellore</option>
+                <option value="Rajahmundry">Rajahmundry</option>
+                <option value="Kakinada">Kakinada</option>
+                <option value="Chittoor">Chittoor</option>
+                <option value="Kadapa">Kadapa</option>
+                <option value="Anantapur">Anantapur</option>
+                <option value="Ongole">Ongole</option>
+                <option value="VZM">Vijayanagaram</option>
+                <option value="Srikakulam">Srikakulam</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Select Mode of Transport:</label>
+                <div class="transport-options">
+                    <label>
+                        <input type="radio" name="transport" value="bus" checked> Bus
+                    </label>
+                    <label>
+                        <input type="radio" name="transport" value="train"> Train
+                    </label>
+                </div>
+            </div>
+
+            <button onclick="findTransport()">Find Transport</button>
+        </div>
+
+        <div id="results" class="results-container"></div>
+    </div>
+
+    <footer>
+        <section class="footer">
+            <div class="cont">
+                <div class="detail">
+                    <h3>DestFinder</h3>
+                    <p>DestFinder is an innovative web application designed to simplify and enhance the travel planning experience for users.The platform acts as a comprehensive travel assistant,enabling users to discover destinations,explore transportation options,calculate travel_budgets, and connect with local guides for a personalized travel experience.</p>
+                    <h5>get in touch</h5>
+                    <a href="#">DestFinder123@mail.com</a>
+                    <div class="social">
+                        <a href="#"><i class="fa fa-linkedin-square"></i></a>
+                        <a href="#"><i class="fa fa-facebook-square"></i></a>
+                        <a href="#"><i class="fa fa-twitter-square"></i></a>
+                    </div>
+                </div>
+                <div class="about-us">
+                    <h4>about us</h4>
+                    <li><a href="{% url 'about' %}">about us</a></li>
+                    <li><a href="{% url 'about' %}">our team</a></li>
+                </div>
+                <div class="about-us">
+                    <h4>help</h4>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                </div>
+                <div class="about-us">
+                    <h4>Resources</h4>
+                    <li><a href="#">gallery</li>
+                </div>
+            </div>
+  
+            <div class="copyright">
+                <div>
+                    &copy;2025 - DestFinder, inc, all rights reserved
+                </div>
+                <div>
+                    <a href="#">term & conditions</a>
+                    
+                </div>
+            </div>
+        </section>
+    </footer>
+    <script src="{% static 'js/trans.js' %}"></script>
+</body>
+</html>

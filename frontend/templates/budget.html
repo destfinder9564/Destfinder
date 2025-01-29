@@ -1,0 +1,250 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget-Calculator</title>
+    <link rel="stylesheet" href="{% static 'css/budget1.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <!-- home section starts here  -->
+    <div class="first">
+        <section class="home">
+            <div class="home-box">
+                <nav>
+                    <div class="logo bars">
+                        <div class="bar">
+                            <i class="fa fa-bars"></i>
+                        </div>
+                        <a href="{% url 'home' %}">DestFinder</a>
+                    </div>
+                    <div class="menu">
+                        <div class="close">
+                            <i class="fa fa-close"></i>
+                        </div>
+                        <ul>
+                            <li><a href="{% url 'home' %}">Home</a></li>
+                            <li><a href="{% url 'about' %}">About Us</a></li>
+                            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'destination' %}">Destination</a></li>
+                                <li><a href="{% url 'budget_calculator' %}">Budget Calculator</a></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                                <li><a href="{% url 'profile' %}">Profile</a></li>
+                            {% else %}
+                                <li><a href="{% url 'register' %}">Register</a></li>
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </section>
+    </div>
+    <div class="second">
+        <div class="conte">
+            <h1 style="font-family: 'Times New Roman', Times, serif;">Travel Budget Calculator</h1>
+            <p>Plan your trip expenses with ease</p>
+        </div>
+    </div>
+    <div class="calculator-container">
+        <form id="budgetForm" onsubmit="calculateBudget(event)">
+            <div class="input-group">
+                <label for="destination">Destination</label>
+                <select id="destination" required>
+                    <option value="">Choose a destination</option>
+                    <option value="tirupati">Tirupati</option>
+                    <option value="vizag">Visakhapatnam</option>
+                    <option value="araku">Araku Valley</option>
+                    <option value="amaravati">Amaravati</option>
+                    <option value="anantapur">Anantapur</option>
+                    <option value="srisailam">Srisailam</option>
+                    <option value="gandikota">Gandikota</option>
+                    <option value="konark">Konark Beach</option>
+                    <option value="horsley">Horsley Hills</option>
+                    <option value="lepakshi">Lepakshi</option>
+                </select>
+
+            </div>
+
+            <div class="input-group">
+                <label for="days">Number of Days</label>
+                <input type="number" id="days" required min="1" value="1">
+            </div>
+
+            <div class="input-group">
+                <label for="transportation">Transportation Mode</label>
+                <select id="transportation" required>
+                    <option value="train">Train</option>
+                    <option value="bus">Bus</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="transportCost">Transportation Cost</label>
+                <input type="number" id="transportCost" required min="0" placeholder="Enter cost">
+            </div>
+
+            <div class="input-group">
+                <label for="accommodation">Daily Accommodation Cost</label>
+                <input type="number" id="accommodation" required min="0" placeholder="Enter cost per day">
+            </div>
+
+            <div class="input-group">
+                <label for="foodCost">Daily Food Budget</label>
+                <input type="number" id="foodCost" required min="0" placeholder="Enter cost per day">
+            </div>
+
+            <div class="input-group">
+                <label for="guideCost">Guide Charges (if any)</label>
+                <input type="number" id="guideCost" min="0" value="0" placeholder="Enter guide cost">
+            </div>
+
+            <button type="submit" class="calculate-btn">Calculate Budget</button>
+        </form>
+
+        <div class="result" id="result">
+            <h2>Budget Summary</h2>
+            <div class="summary-container">
+                <div class="summary-item">
+                    <span>Transportation:</span>
+                    <span id="transportationTotal">Rs.0</span>
+                </div>
+                <div class="summary-item">
+                    <span>Accommodation:</span>
+                    <span id="accommodationTotal">Rs.0</span>
+                </div>
+                <div class="summary-item">
+                    <span>Food:</span>
+                    <span id="foodTotal">Rs.</span>
+                </div>
+                <div class="summary-item">
+                    <span>Guide Charges:</span>
+                    <span id="guideTotal">Rs.0</span>
+                </div>
+                <div class="summary-item total">
+                    <span>Total Budget:</span>
+                    <span id="totalBudget">Rs.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <footer>
+        <section class="footer">
+            <div class="cont">
+                <div class="detail">
+                    <h3>DestFinder</h3>
+                    <p>DestFinder is an innovative web application designed to simplify and enhance the travel planning experience for users.The platform acts as a comprehensive travel assistant,enabling users to discover destinations,explore transportation options,calculate travel_budgets, and connect with local guides for a personalized travel experience.</p>
+                    <h5>get in touch</h5>
+                    <a href="#">DestFinder123@mail.com</a>
+                    <div class="social">
+                        <a href="#"><i class="fa fa-linkedin-square"></i></a>
+                        <a href="#"><i class="fa fa-facebook-square"></i></a>
+                        <a href="#"><i class="fa fa-twitter-square"></i></a>
+                    </div>
+                </div>
+                <div class="about-us">
+                    <h4>about us</h4>
+                    <li><a href="{% url 'about' %}">about us</a></li>
+                    <li><a href="{% url 'about' %}">our team</a></li>
+                </div>
+                <div class="about-us">
+                    <h4>help</h4>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                </div>
+                <div class="about-us">
+                    <h4>Resources</h4>
+                    <li><a href="#">gallery</li>
+                </div>
+            </div>
+  
+            <div class="copyright">
+                <div>
+                    &copy;2025 - DestFinder, inc, all rights reserved
+                </div>
+                <div>
+                    <a href="#">term & conditions</a>
+                    
+                </div>
+            </div>
+        </section>
+    </footer>
+    <script>
+        const bars = document.querySelector(".bar"),
+close = document.querySelector(".close"),
+menu = document.querySelector(".menu");
+
+bars.addEventListener("click", () => {
+    menu.classList.add("active");
+    gsap.from(".menu", {
+        opacity: 0,
+        duration: .3
+    })
+
+    gsap.from(".menu ul", {
+        opacity: 0,
+        x: -300
+    })
+});
+
+close.addEventListener("click", () => {
+    menu.classList.remove("active")
+});
+        function calculateBudget(event) {
+    event.preventDefault();
+
+    // Get input values
+    const destination = document.getElementById('destination').value;
+    const days = parseInt(document.getElementById('days').value);
+    const transportation = document.getElementById('transportation').value;
+    const transportCost = parseFloat(document.getElementById('transportCost').value);
+    const accommodation = parseFloat(document.getElementById('accommodation').value);
+    const foodCost = parseFloat(document.getElementById('foodCost').value);
+    const guideCost = parseFloat(document.getElementById('guideCost').value);
+
+    // Calculate totals
+    const accommodationTotal = accommodation * days;
+    const foodTotal = foodCost * days;
+    const totalBudget = transportCost + accommodationTotal + foodTotal + guideCost;
+
+    // Update the summary
+    document.getElementById('transportationTotal').textContent = formatCurrency(transportCost);
+    document.getElementById('accommodationTotal').textContent = formatCurrency(accommodationTotal);
+    document.getElementById('foodTotal').textContent = formatCurrency(foodTotal);
+    document.getElementById('guideTotal').textContent = formatCurrency(guideCost);
+    document.getElementById('totalBudget').textContent = formatCurrency(totalBudget);
+
+    // Show the result with animation
+    const result = document.getElementById('result');
+    result.style.opacity = '0';
+    result.style.display = 'block';
+    setTimeout(() => {
+        result.style.opacity = '1';
+    }, 10);
+}
+
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'INR'
+    }).format(amount);
+}
+
+// Add input validation
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', function() {
+        if (this.value < 0) {
+            this.value = 0;
+        }
+    });
+});
+
+// Initialize the form
+document.getElementById('budgetForm').reset();
+    </script>
+</body>
+</html>

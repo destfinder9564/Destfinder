@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact-Us</title>
+    <link rel="stylesheet" href="{% static 'css/cont.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" 
+    rel="stylesheet">
+</head>
+<body>
+    <!-- home section starts here  -->
+     <div class="first">
+        <section class="home">
+            <div class="home-box">
+                <nav>
+                    <div class="logo bars">
+                        <div class="bar">
+                            <i class="fa fa-bars"></i>
+                        </div>
+                        <a href="{% url 'home' %}">DestFinder</a>
+                    </div>
+                    <div class="menu">
+                        <div class="close">
+                            <i class="fa fa-close"></i>
+                        </div>
+                        <ul>
+                            <li><a href="{% url 'home' %}">Home</a></li>
+                            <li><a href="{% url 'about' %}">About Us</a></li>
+                            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'destination' %}">Destination</a></li>
+                                <li><a href="{% url 'budget_calculator' %}">Budget Calculator</a></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                                <li><a href="{% url 'profile' %}">Profile</a></li>
+                            {% else %}
+                                <li><a href="{% url 'register' %}">Register</a></li>
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+            </nav>
+        </div>
+    </section>
+     </div>
+    <div class="second">
+        <div class="container">
+            <h1 style="text-align: center; color: rgb(10, 10, 10); font-weight: 800; font-family: 'Times New Roman', Times, serif;">Contact Us</h1>
+            <p style="text-align: center; color: rgb(15, 15, 15);font-weight: 800;">We'd love to hear from you!</p>
+        </div>
+    </header>
+
+    <!-- Contact Form Section -->
+    <section class="contact-form">
+        <div class="container">
+            <form id="contactForm" action="submit_form.php" method="POST">
+                <div class="form-group">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" rows="6" placeholder="Enter your message" required></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+    </div>
+    <footer>
+        <footer>
+            <section class="footer">
+                <div class="cont">
+                    <div class="detail">
+                        <h3>DestFinder</h3>
+                        <p>DestFinder is an innovative web application designed to simplify and enhance the travel planning experience for users.The platform acts as a comprehensive travel assistant,enabling users to discover destinations,explore transportation options,calculate travel_budgets, and connect with local guides for a personalized travel experience.</p>
+                        <h5>get in touch</h5>
+                        <a href="#">DestFinder123@mail.com</a>
+                        <div class="social">
+                            <a href="#"><i class="fa fa-linkedin-square"></i></a>
+                            <a href="#"><i class="fa fa-facebook-square"></i></a>
+                            <a href="#"><i class="fa fa-twitter-square"></i></a>
+                        </div>
+                    </div>
+                    <div class="about-us">
+                        <h4>about us</h4>
+                        <li><a href="{% url 'about' %}">about us</a></li>
+                        <li><a href="{% url 'about' %}">our team</a></li>
+                    </div>
+                    <div class="about-us">
+                        <h4>help</h4>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                    </div>
+                    <div class="about-us">
+                        <h4>Resources</h4>
+                        <li><a href="#">gallery</li>
+                    </div>
+                </div>
+      
+                <div class="copyright">
+                    <div>
+                        &copy;2025 - DestFinder, inc, all rights reserved
+                    </div>
+                    <div>
+                        <a href="#">term & conditions</a>
+                        
+                    </div>
+                </div>
+            </section>
+        </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+const bars = document.querySelector(".bar"),
+close = document.querySelector(".close"),
+menu = document.querySelector(".menu");
+
+bars.addEventListener("click", () => {
+    menu.classList.add("active");
+    gsap.from(".menu", {
+        opacity: 0,
+        duration: .3
+    })
+
+    gsap.from(".menu ul", {
+        opacity: 0,
+        x: -300
+    })
+});
+
+close.addEventListener("click", () => {
+    menu.classList.remove("active")
+});
+// Form Submission Handler
+document.getElementById("contactForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    let formData = new FormData(this);
+
+    // Show loading animation
+    Swal.fire({
+        title: "Sending...",
+        text: "Please wait while we process your request.",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    // Simulate form submission to Django backend
+    fetch("{% url 'contact' %}", {  // Replace 'contact' with actual URL name in urls.py
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: "success",
+                title: "Message Sent!",
+                text: data.message,
+                showConfirmButton: false,
+                timer: 2500  // Auto-close after 2.5 seconds
+            });
+            document.getElementById("contactForm").reset(); // Reset form after success
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops!",
+                text: data.message,
+                showConfirmButton: true
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "An unexpected error occurred. Please try again later.",
+            showConfirmButton: true
+        });
+    });
+});
+    </script>
+</body>
+</html>

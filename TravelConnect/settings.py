@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-ALLOWED_HOSTS = ['*']
 import dj_database_url
 DATABASES = {
     'default': dj_database_url.config(default='postgres://...')
@@ -40,7 +39,9 @@ SECRET_KEY = 'django-insecure-=htodb@69bg*f@qyu%)hco9zn$h08kqws2^(h7y&yb&p&znqyy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ "localhost",
+    "127.0.0.1",
+    "destfinder-3.onrender.com",]
 
 
 # Application definition
